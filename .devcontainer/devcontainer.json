@@ -1,0 +1,60 @@
+{
+  // EVERYTHING HERE IS PINNED ON PURPOSE. Read this before changing a version.
+  //
+  // On 2026-09-08 `npm install -g openclaw@latest` pulled openclaw 2026.9.3,
+  // which raised its Node floor to >=24.16.0 and hard-fails its preinstall on
+  // the Node 22 below. A floating version is a live dependency on someone
+  // else's release schedule. The stack below is the combination verified
+  // end-to-end in a fresh Codespace in September 2026. Moving to openclaw
+  // 2026.9.3 or later means bumping the Node feature to 24 in the same change;
+  // they must move together. Test in a fresh Codespace before you rely on it.
+  "name": "asee9: agentic AI Codespace (bring your own OpenRouter key)",
+
+  // Pinned by digest: the :3.12 tag itself moves.
+  "image": "mcr.microsoft.com/devcontainers/python:3.12@sha256:7ae01dce85c08cc6b6ca411d7d7051eb100d2274ee2702120c11236692b6204f",
+
+  "features": {
+    // Feature pinned to an exact release, and Node pinned to an exact patch:
+    // "22" would drift within the 22.x line on any future rebuild.
+    "ghcr.io/devcontainers/features/node:1.7.1": { "version": "22.23.2" },
+    // sshd lets you reach the Codespace with `gh codespace ssh` for testing.
+    "ghcr.io/devcontainers/features/sshd:1.1.0": { "version": "1.1.0" },
+    // gh, so the Codespace can make port 8000 public by itself (site-public.sh).
+    "ghcr.io/devcontainers/features/github-cli:1.1.2": { "version": "2.100.0" }
+  },
+
+  // NO postAttachCommand. The public site on port 8000 (site-public.sh) is started
+  // from autostart.sh in the background instead. A postAttachCommand is held back
+  // until Trust and then run in a NEW visible terminal that takes focus, hiding
+  // the first terminal where setup and the agent are (measured in a real Codespace).
+
+  // onCreateCommand, NOT postCreateCommand: GitHub runs onCreateCommand inside a
+  // Codespaces prebuild (if you enable one) and never runs postCreateCommand
+  // there. Without a prebuild it runs once, while the Codespace is created.
+  "onCreateCommand": "bash .devcontainer/postCreate.sh",
+
+  // Two cores. Enough for one person running one agent: the agent's work is
+  // mostly waiting on the model, not local compute. Codespaces quota is billed
+  // in core-hours, so a 2-core machine uses half the free monthly allowance of
+  // a 4-core one per hour. Raise to 4 if first-time setup feels slow; 4 cores
+  // mainly shortens container creation and package installs.
+  // HOW to raise it: for everyone, change 2 to 4 below and push (every new
+  // Codespace then gets at least 4 cores). For one Codespace only, leave this
+  // file alone and pick "4-core" under Machine type on the Create codespace
+  // page (Code -> Codespaces -> ... -> New with options). Why you might: a room
+  // of people creating Codespaces at once, or heavy local work such as big
+  // pandas jobs; the cost is twice the core-hours from your quota.
+  "hostRequirements": { "cpus": 2 },
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": { "label": "Your site (site/ folder)" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "yzhang.markdown-all-in-one",
+        "mechatroner.rainbow-csv"
+      ]
+    }
+  }
+}

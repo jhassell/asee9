@@ -1,0 +1,18 @@
+# Your own documents for the exercises. They stay in your Codespace.
+mine/
+
+# Agent-built website: served publicly from the Codespace, never committed.
+site/
+
+# Secrets: nothing with a key in it belongs in git.
+.env
+.env.*
+*.key
+my-openrouter.key
+
+# Netlify CLI state, if anyone uses the CLI instead of publish-site.sh
+.netlify/
+
+# Junk
+__pycache__/
+.DS_Store
