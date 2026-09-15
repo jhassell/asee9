@@ -607,8 +607,9 @@ implied.
 
 ## License
 
-No license file yet. The templates in `exercises/` are meant to be copied, cut
-down, renamed and put under your own name for your own courses — that is what
-they are for. For anything beyond your own teaching (republishing them, putting
-them in a product, handing them to another institution as your own material),
-ask first.
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/),
+full text in [LICENSE](LICENSE). Copyright 2026 John Hassell. You may copy,
+adapt and redistribute everything here, including for commercial use, as long
+as you credit the source (for example "adapted from github.com/jhassell/asee9 by
+John Hassell, CC BY 4.0") and note what you changed. The templates in
+`exercises/` are meant to be copied, cut down and renamed for your own courses.
